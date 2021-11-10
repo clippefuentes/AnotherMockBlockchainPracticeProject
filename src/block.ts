@@ -1,4 +1,4 @@
-import { SHA256 } from 'crypto-js'
+import { ChainUtil } from './chainUtil';
 import { DIFFICULTY, MINE_RATE } from './config';
 
 export interface BlockInterface {
@@ -65,7 +65,7 @@ export class Block {
     }
 
     static hash(timestamp: number, lastHash: string, data: string[], nonce: number, difficulty: number) {
-        return SHA256(`${timestamp}${lastHash}${JSON.stringify(data)}${nonce}${difficulty}`).toString()
+        return ChainUtil.hash(`${timestamp}${lastHash}${JSON.stringify(data)}${nonce}${difficulty}`).toString()
     }
 
     static blockHash(block: Block) {
