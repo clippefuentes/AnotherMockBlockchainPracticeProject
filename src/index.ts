@@ -5,7 +5,7 @@ import { P2PServer } from './p2pServer';
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 
-// set HTTP_PORT=3001 && set P2P_PORT=5002 && set PEERS=ws://localhost:5001&&npm run start:dev
+// set HTTP_PORT=3001 && set P2P_PORT=5002 && set PEERS=ws://localhost:5011&&npm run start:dev
 const app = express()
 const bc = new Blockchain()
 const p2pServer = new P2PServer(bc)
@@ -20,6 +20,7 @@ app.get('/blocks', (req: any, res: any) => {
 app.post('/mine', (req: any, res: any) => {
     const block = bc.addBlock(req.body.data)
     console.log(`NEW BLOCK ADDED: ${block.toString()}`)
+    p2pServer.syncChains()
     res.redirect('/blocks')
 })
 
